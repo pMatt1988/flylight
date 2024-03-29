@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-<button onClick="runGenerator()">Start</button>
+<button onClick="runFlylight()">Start</button>
 <div id="sections">
     <div id="section1"></div>
     <div id="section2"></div>
@@ -74,28 +74,45 @@
 <script>
 
 
-    const section1 = document.getElementById('section1');
-    const section2 = document.getElementById('section2');
-    const section3 = document.getElementById('section3');
-    const section4 = document.getElementById('section4');
-
-    function* generator() {
-        yield {color: 'blue', section: section1};
-        yield {color: 'orange', section: section2};
-        yield {color: 'orange', section: section3};
-        yield {color: '#66ff00', section: section4};
-    }
 
 
-    async function runGenerator() {
-        document.querySelector('button').hidden = true;
-        for (const {color, section} of generator()) {
+    const data = [
+        {
+            color: "blue",
+            section: document.getElementById('section1')
+        },
+        {
+            color: "orange",
+            section: document.getElementById('section2')
+        },
+        {
+            color: "orange",
+            section: document.getElementById('section3')
+        },
+        {
+            color: "#66FF00",
+            section: document.getElementById('section4')
+        }
+    ];
+
+
+    const button = document.querySelector('button');
+
+    async function runFlylight() {
+        button.hidden = true;
+        for (const {color, section} of data) {
             section.style.backgroundColor = color;
             await new Promise(resolve => setTimeout(resolve, 1000));
-
         }
 
-        location.reload();
+        reset();
+    }
+
+    function reset() {
+        for (const {section} of data) {
+            section.style.backgroundColor = 'transparent';
+        }
+        button.hidden = false;
     }
 </script>
 </body>
